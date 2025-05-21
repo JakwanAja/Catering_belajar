@@ -30,7 +30,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Good Morning, Azhar"
+                    android:text="Good Night, Faris"
                     android:textColor="@color/black"
                     android:textSize="24dp"
                     android:textStyle="bold" />
@@ -180,7 +180,6 @@
                     android:layout_margin="10dp" />
 
             </RelativeLayout>
-
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
