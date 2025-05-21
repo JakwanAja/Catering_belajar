@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Catering_belajar</string>
+    <string name="new_amp_trending"><![CDATA[New & Trending]]></string>
+    <string name="pesan_sekarang">Pesan Sekarang</string>
+    <string name="rp_0">Rp 0</string>
+    <string name="pastikan_alamat_penerima_sudah_benar_ya">Pastikan alamat penerima sudah benar ya!</string>
+    <string name="harga_tertera_untuk_1_porsi">Harga tertera untuk 1 porsi</string>
+    <string name="pesan_antar_estimasi_tiba_25_min">Pesan Antar - Estimasi tiba 25 min</string>
+    <string name="_0_items">0 items</string>
+</resources>
