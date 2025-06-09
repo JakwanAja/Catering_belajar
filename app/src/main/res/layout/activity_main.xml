@@ -30,7 +30,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Good Night, Faris"
+                    android:text="Welcome, Gamer!"
                     android:textColor="@color/black"
                     android:textSize="24dp"
                     android:textStyle="bold" />
@@ -73,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="20dp"
-                    android:text="Search food, package etc."
+                    android:text="Search game or voucher..."
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -127,7 +127,7 @@
                         android:drawablePadding="10dp"
                         android:gravity="center_vertical"
                         android:padding="10dp"
-                        android:text="Order History"
+                        android:text="Top-Up History"
                         android:textColor="#ff2a7e2f"
                         android:textSize="12sp"
                         app:drawableStartCompat="@drawable/ic_access_time"
@@ -142,7 +142,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="20dp"
-                android:text="Categories"
+                android:text="Game Categories"
                 android:textColor="@android:color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -164,7 +164,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="20dp"
-                android:text="@string/new_amp_trending"
+                android:text="New &amp; Popular Top-Ups"
                 android:textColor="@android:color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />

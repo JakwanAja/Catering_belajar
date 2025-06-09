@@ -16,7 +16,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
+            android:layout_height="wrap_content"
             app:navigationIcon="@drawable/ic_back" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -54,7 +54,7 @@
                         android:layout_height="35dp"
                         android:layout_alignParentStart="true"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/ic_location"
+                        android:src="@drawable/ic_warning"
                         app:tint="@color/white" />
 
                     <TextView
@@ -63,7 +63,7 @@
                         android:layout_centerInParent="true"
                         android:layout_marginStart="10dp"
                         android:layout_toEndOf="@id/imgPlace"
-                        android:text="@string/pastikan_alamat_penerima_sudah_benar_ya"
+                        android:text="Pastikan ID &amp; Server Anda benar sebelum melakukan top-up."
                         android:textColor="@android:color/white"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -83,7 +83,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_centerInParent="true"
                         android:layout_marginStart="20dp"
-                        android:src="@drawable/ic_pickup" />
+                        android:src="@drawable/gamepad" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -97,7 +97,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/harga_tertera_untuk_1_porsi"
+                            android:text="Nikmati Top-Up Mulai Rp 5.000"
                             android:textColor="@android:color/black"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -105,7 +105,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/pesan_antar_estimasi_tiba_25_min"
+                            android:text="Proses cepat 1-3 menit (real-time)"
                             android:textColor="@android:color/black"
                             android:textSize="12sp" />
 
@@ -170,7 +170,7 @@
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
             android:layout_marginBottom="30dp"
-            android:text="@string/pesan_sekarang"
+            android:text="Lanjutkan Pembayaran"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="16sp"
