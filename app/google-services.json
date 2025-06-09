@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "679085012816",
+    "project_id": "topupgameapp",
+    "storage_bucket": "topupgameapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:679085012816:android:bd3b97c35d975c37fc9e55",
+        "android_client_info": {
+          "package_name": "com.projectuas.topupgameapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRomnRK1Ey9eE7p_AJ9IdOmmUl6acKd9s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

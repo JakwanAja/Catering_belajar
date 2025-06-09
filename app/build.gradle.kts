@@ -1,16 +1,19 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    // Add the Google services Gradle plugin
+    id("com.google.gms.google-services")
+
 }
 
 android {
-    namespace = "com.wanjakwan.catering_belajar"
-    compileSdk = 34
+    namespace = "com.projectuas.topupgameapp"
+    compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.wanjakwan.catering_belajar"
+        applicationId = "com.projectuas.topupgameapp"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -38,34 +41,41 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core:1.13.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation(libs.androidx.core)
+    implementation(libs.androidx.appcompat.v161)
+    implementation(libs.material.v1110)
+    implementation(libs.androidx.constraintlayout.v214)
 
 // Lifecycle
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
-    annotationProcessor("androidx.lifecycle:lifecycle-compiler:2.6.2")
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    annotationProcessor(libs.lifecycle.compiler)
 
 // Room
-    implementation("androidx.room:room-runtime:2.6.1")
-    implementation("androidx.room:room-rxjava3:2.6.1")
-    annotationProcessor("androidx.room:room-compiler:2.6.1")
+    implementation(libs.androidx.room.runtime.v261)
+    implementation(libs.androidx.room.rxjava3.v261)
+    annotationProcessor(libs.androidx.room.compiler.v261)
 
 // Glide
-    implementation("com.github.bumptech.glide:glide:4.16.0")
-    annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
+    implementation(libs.glide.v4160)
+    annotationProcessor(libs.compiler.v4160)
 
 // RxJava
-    implementation("io.reactivex.rxjava3:rxjava:3.1.8")
-    implementation("io.reactivex.rxjava3:rxandroid:3.0.2")
+    implementation(libs.rxjava.v318)
+    implementation(libs.rxandroid.v302)
 
     // Unit test
-    testImplementation("junit:junit:4.13.2")
+    testImplementation(libs.junit)
 
     // Instrumentation test
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation(libs.androidx.junit.v115)
+    androidTestImplementation(libs.androidx.espresso.core.v351)
+
+    // Firebase BoM (Bill of Materials) - Menyediakan versi terpadu
+    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+
+    // Firebase Authentication
+    implementation("com.google.firebase:firebase-auth-ktx")
+
 }
