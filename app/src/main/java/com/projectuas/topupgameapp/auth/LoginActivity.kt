@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.projectuas.topupgameapp.MainActivity
 import com.projectuas.topupgameapp.databinding.ActivityLoginBinding
+import com.projectuas.topupgameapp.main.MainActivity
 
 class LoginActivity : AppCompatActivity() {
 
