@@ -12,22 +12,24 @@ import com.google.gson.reflect.TypeToken
 import com.projectuas.topupgameapp.R
 import com.projectuas.topupgameapp.databinding.ActivityOrderBinding
 import com.projectuas.topupgameapp.data.model.HistoryModel
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.auth.FirebaseAuth
 import java.text.SimpleDateFormat
 import java.util.*
 
 class OrderActivity : AppCompatActivity() {
 
+    val db = FirebaseFirestore.getInstance()
     private lateinit var binding: ActivityOrderBinding
-
     private var jumlahPaket = IntArray(6) { 0 }
-    private val hargaPaket = intArrayOf(10500, 15000, 23700, 22500, 16500, 26000)
+    private val hargaPaket = intArrayOf(9000, 15000, 25700, 59900, 109500, 210000)
     private val namaPaket = arrayOf(
-        "Free Fire - 86 Diamonds",
-        "PUBG Mobile - UC 300",
-        "Mobile Legends - 140 Diamonds",
-        "Valorant - VP 1000",
-        "COD Mobile - CP 520",
-        "Genshin - Genesis Crystal"
+        "PUBG Mobile - UC 60",
+        "PUBG Mobile - UC 100",
+        "PUBG Mobile - UC 170",
+        "PUBG Mobile - UC 500",
+        "PUBG Mobile - UC 1050",
+        "PUBG Mobile - UC 2200"
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,28 +90,30 @@ class OrderActivity : AppCompatActivity() {
             return
         }
 
-        val sharedPreferences = getSharedPreferences("HISTORY", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        val gson = Gson()
+        val db = FirebaseFirestore.getInstance()
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
 
-        val historyList: MutableList<HistoryModel> = getHistoryList()
+        if (userId == null) {
+            Toast.makeText(this, "User belum login", Toast.LENGTH_SHORT).show()
+            return
+        }
 
         for (i in jumlahPaket.indices) {
             if (jumlahPaket[i] > 0) {
-                val history = HistoryModel(
-                    namaPaket = namaPaket[i],
-                    jumlah = "${jumlahPaket[i]} item(s)",
-                    harga = "Rp ${jumlahPaket[i] * hargaPaket[i]}",
-                    status = "Top Up Berhasil Masuk",
-                    tanggal = getCurrentDate()
+                val historyData = hashMapOf(
+                    "namaPaket" to namaPaket[i],
+                    "jumlah" to "${jumlahPaket[i]} item(s)",
+                    "harga" to "Rp ${jumlahPaket[i] * hargaPaket[i]}",
+                    "status" to "Top Up Berhasil Masuk",
+                    "tanggal" to getCurrentDate()
                 )
-                historyList.add(history)
+
+                db.collection("users")
+                    .document(userId)
+                    .collection("history")
+                    .add(historyData)
             }
         }
-
-        val json = gson.toJson(historyList)
-        editor.putString("history_list", json)
-        editor.apply()
 
         Toast.makeText(
             this,
@@ -121,6 +125,7 @@ class OrderActivity : AppCompatActivity() {
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
+
 
     private fun getHistoryList(): MutableList<HistoryModel> {
         val sharedPreferences = getSharedPreferences("HISTORY", Context.MODE_PRIVATE)

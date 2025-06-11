@@ -54,11 +54,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     annotationProcessor(libs.lifecycle.compiler)
 
-// Room
-    implementation(libs.androidx.room.runtime.v261)
-    implementation(libs.androidx.room.rxjava3.v261)
-    annotationProcessor(libs.androidx.room.compiler.v261)
-
 // Glide
     implementation(libs.glide.v4160)
     annotationProcessor(libs.compiler.v4160)
@@ -82,4 +77,5 @@ dependencies {
     // Firebase Authentication
     implementation("com.google.firebase:firebase-auth-ktx")
 
+    implementation(libs.firebase.firestore.ktx)
 }

@@ -1,20 +1,22 @@
 package com.projectuas.topupgameapp.main
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import com.projectuas.topupgameapp.databinding.ActivityHistoryOrderBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.projectuas.topupgameapp.data.model.HistoryModel
+import com.projectuas.topupgameapp.databinding.ActivityHistoryOrderBinding
 
 class HistoryOrderActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHistoryOrderBinding
     private lateinit var adapter: HistoryAdapter
-    private val historyList = mutableListOf<HistoryModel>()
+
+    private val firestore = FirebaseFirestore.getInstance()
+    private val uid = FirebaseAuth.getInstance().currentUser?.uid
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,38 +24,47 @@ class HistoryOrderActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupRecyclerView()
-        loadDummyHistory() // replace this later with Firebase or Room DB
+        loadHistoryFromFirestore()
     }
 
     private fun setupRecyclerView() {
-        val list = getHistoryList() // Ambil dari SharedPreferences
-        adapter = HistoryAdapter(list)
-        binding.tvNotFound.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
-        binding.rvHistory.adapter = adapter
+        adapter = HistoryAdapter(emptyList())
         binding.rvHistory.layoutManager = LinearLayoutManager(this)
+        binding.rvHistory.adapter = adapter
     }
 
-    private fun getHistoryList(): MutableList<HistoryModel> {
-        val sharedPreferences = getSharedPreferences("HISTORY", Context.MODE_PRIVATE)
-        val json = sharedPreferences.getString("history_list", null)
-        val type = object : TypeToken<MutableList<HistoryModel>>() {}.type
-
-        return if (json != null) {
-            Gson().fromJson(json, type)
-        } else {
-            mutableListOf()
+    private fun loadHistoryFromFirestore() {
+        if (uid == null) {
+            Toast.makeText(this, "User tidak ditemukan", Toast.LENGTH_SHORT).show()
+            return
         }
-    }
-    private fun loadDummyHistory() {
-        historyList.add(
-            HistoryModel(
-                namaPaket = "MLBB 86 Diamonds",
-                harga = "Rp 10.500",
-                jumlah = "1 item",
-                status = "Top Up Berhasil Masuk",
-                tanggal = "11 Juni 2025"
-            )
-        )
-        adapter.notifyDataSetChanged()
+
+        firestore.collection("users")
+            .document(uid)
+            .collection("history")
+            .get()
+            .addOnSuccessListener { result ->
+                val historyList = result.map { doc ->
+                    HistoryModel(
+                        namaPaket = doc.getString("namaPaket") ?: "",
+                        jumlah = doc.getString("jumlah") ?: "",
+                        harga = doc.getString("harga") ?: "",
+                        status = doc.getString("status") ?: "",
+                        tanggal = doc.getString("tanggal") ?: ""
+                    )
+                }
+
+                if (historyList.isEmpty()) {
+                    binding.tvNotFound.visibility = View.VISIBLE
+                } else {
+                    binding.tvNotFound.visibility = View.GONE
+                    adapter = HistoryAdapter(historyList)
+                    binding.rvHistory.adapter = adapter
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Gagal memuat riwayat", Toast.LENGTH_SHORT).show()
+                binding.tvNotFound.visibility = View.VISIBLE
+            }
     }
 }
