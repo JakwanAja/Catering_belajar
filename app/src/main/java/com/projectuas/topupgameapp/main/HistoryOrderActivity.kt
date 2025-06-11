@@ -3,6 +3,7 @@ package com.projectuas.topupgameapp.main
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
@@ -28,7 +29,9 @@ class HistoryOrderActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        adapter = HistoryAdapter(emptyList())
+        adapter = HistoryAdapter(emptyList()) { historyItem ->
+            showDeleteDialog(historyItem)
+        }
         binding.rvHistory.layoutManager = LinearLayoutManager(this)
         binding.rvHistory.adapter = adapter
     }
@@ -38,6 +41,9 @@ class HistoryOrderActivity : AppCompatActivity() {
             Toast.makeText(this, "User tidak ditemukan", Toast.LENGTH_SHORT).show()
             return
         }
+
+        binding.progressBar.visibility = View.VISIBLE
+        binding.rvHistory.visibility = View.GONE
 
         firestore.collection("users")
             .document(uid)
@@ -54,17 +60,63 @@ class HistoryOrderActivity : AppCompatActivity() {
                     )
                 }
 
+                binding.progressBar.visibility = View.GONE
+                binding.rvHistory.visibility = View.VISIBLE
+
                 if (historyList.isEmpty()) {
                     binding.tvNotFound.visibility = View.VISIBLE
                 } else {
                     binding.tvNotFound.visibility = View.GONE
-                    adapter = HistoryAdapter(historyList)
+                    adapter = HistoryAdapter(historyList) { item ->
+                        showDeleteDialog(item)
+                    }
                     binding.rvHistory.adapter = adapter
                 }
             }
             .addOnFailureListener {
                 Toast.makeText(this, "Gagal memuat riwayat", Toast.LENGTH_SHORT).show()
                 binding.tvNotFound.visibility = View.VISIBLE
+            }
+    }
+
+    private fun showDeleteDialog(item: HistoryModel) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Hapus Riwayat")
+        builder.setMessage("Yakin ingin menghapus \"${item.namaPaket}\" dari riwayat?")
+        builder.setPositiveButton("Hapus") { _, _ ->
+            deleteHistoryFromFirestore(item)
+        }
+        builder.setNegativeButton("Batal", null)
+        builder.show()
+    }
+
+    private fun deleteHistoryFromFirestore(item: HistoryModel) {
+        if (uid == null) return
+
+        firestore.collection("users")
+            .document(uid)
+            .collection("history")
+            .whereEqualTo("namaPaket", item.namaPaket)
+            .whereEqualTo("tanggal", item.tanggal) // Gunakan kombinasi unik
+            .get()
+            .addOnSuccessListener { documents ->
+                for (doc in documents) {
+                    firestore.collection("users")
+                        .document(uid)
+                        .collection("history")
+                        .document(doc.id)
+                        .delete()
+                        .addOnSuccessListener {
+                            Toast.makeText(this, "Riwayat dihapus", Toast.LENGTH_SHORT).show()
+                            loadHistoryFromFirestore()
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(this, "Gagal menghapus", Toast.LENGTH_SHORT).show()
+                        }
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Terjadi kesalahan saat mencari data", Toast.LENGTH_SHORT).show()
             }
     }
 }
