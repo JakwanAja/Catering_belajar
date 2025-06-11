@@ -22,18 +22,24 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.tvSource.setOnClickListener {
+            startActivity(Intent(this, HistoryOrderActivity::class.java))
+        }
+
         setupCategories()
         setupTrending()
         setupLogout()
     }
 
+// Setup isi bagian "Game Categories"
     private fun setupCategories() {
         val categories = listOf(
-            ModelCategories(R.drawable.pubg, "PUBG Mobile"),
-            ModelCategories(R.drawable.freefire, "Free Fire"),
-            ModelCategories(R.drawable.valorant, "Valorant"),
-            ModelCategories(R.drawable.mobilelegend, "Mobile Legends"),
-            ModelCategories(R.drawable.ghensin, "Genshin Impact")
+            ModelCategories(R.drawable.pubg_logo, "PUBG Mobile"),
+            ModelCategories(R.drawable.freefire_logo, "Free Fire"),
+            ModelCategories(R.drawable.valorant_logo, "Valorant"),
+            ModelCategories(R.drawable.mobile_legend_logo, "Mobile Legends"),
+            ModelCategories(R.drawable.ghensin_impact_logo, "Genshin Impact"),
+            ModelCategories(R.drawable.gamepad, "Others")
         )
 
         categoriesAdapter = CategoriesAdapter(categories)
@@ -41,12 +47,13 @@ class MainActivity : AppCompatActivity() {
         binding.rvCategories.adapter = categoriesAdapter
     }
 
+// Setup isi bagian "New & Popular TopUps"
     private fun setupTrending() {
         val trendingList = listOf(
-            ModelTrending(R.drawable.complete_1, "MLBB 86 Diamonds", "1.200 disukai"),
-            ModelTrending(R.drawable.complete_1, "PUBG UC 300", "1.500 disukai"),
-            ModelTrending(R.drawable.complete_1, "FF 70 Diamonds", "900 disukai"),
-            ModelTrending(R.drawable.complete_1, "Valorant VP 1.000", "2.000 disukai")
+            ModelTrending(R.drawable.popular_2, "PUBG UC 300", "1.500 disukai"),
+            ModelTrending(R.drawable.popular_1, "MLBB 86 Diamonds", "1.200 disukai"),
+            ModelTrending(R.drawable.popular_3, "FF 70 Diamonds", "900 disukai"),
+            ModelTrending(R.drawable.popular_4, "Valorant VP 1.000", "2.000 disukai")
         )
 
         trendingAdapter = TrendingAdapter(trendingList)

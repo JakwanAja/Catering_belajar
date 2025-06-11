@@ -62,6 +62,8 @@ dependencies {
 // Glide
     implementation(libs.glide.v4160)
     annotationProcessor(libs.compiler.v4160)
+    implementation(libs.gson)
+
 
 // RxJava
     implementation(libs.rxjava.v318)
