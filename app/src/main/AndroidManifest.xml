@@ -12,26 +12,47 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Catering"
         tools:targetApi="31">
+
+        <!-- SplashActivity sebagai halaman pertama -->
         <activity
-            android:name=".main.PembayaranActivity"
-            android:exported="false" />
-        <activity android:name=".main.HistoryOrderActivity" />
-        <activity android:name=".main.OrderActivity" />
-        <activity
-            android:name=".auth.RegisterActivity"
-            android:exported="false" />
-        <activity
-            android:name=".main.MainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".auth.LoginActivity"
+            android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Halaman login -->
+        <activity
+            android:name=".auth.LoginActivity"
+            android:exported="false" />
+
+        <!-- Halaman utama -->
+        <activity
+            android:name=".main.MainActivity"
+            android:exported="false" />
+
+        <!-- Halaman register -->
+        <activity
+            android:name=".auth.RegisterActivity"
+            android:exported="false" />
+
+        <!-- Halaman order -->
+        <activity
+            android:name=".main.OrderActivity"
+            android:exported="false" />
+
+        <!-- Halaman riwayat -->
+        <activity
+            android:name=".main.HistoryOrderActivity"
+            android:exported="false" />
+
+        <!-- Halaman pembayaran -->
+        <activity
+            android:name=".main.PembayaranActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
